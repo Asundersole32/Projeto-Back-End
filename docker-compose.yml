@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: mysql_django
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: django_db
+      MYSQL_USER: django_user
+      MYSQL_PASSWORD: django_pass
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+
+  web:
+    build: .
+    container_name: django_api
+    restart: always
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    environment:
+      - DB_NAME=django_db
+      - DB_USER=django_user
+      - DB_PASSWORD=django_pass
+      - DB_HOST=db
+      - DB_PORT=3306
+    volumes:
+      - .:/app   # Monta o código local para desenvolvimento (hot-reload)
+    env_file:
+      - .env     # Opcional: use um arquivo .env para variáveis
+
+volumes:
+  mysql_data:
