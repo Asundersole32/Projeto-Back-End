@@ -1,19 +1,27 @@
 #!/bin/bash
-# entrypoint.sh
 
-# Aguarda o MySQL ficar disponível
 echo "Aguardando banco de dados..."
-while ! nc -z $DB_HOST $DB_PORT; do
-  sleep 1
-done
+python -c "
+import socket
+import time
+import os
+
+host = os.environ.get('DB_HOST', 'db')
+port = int(os.environ.get('DB_PORT', 3306))
+
+while True:
+    try:
+        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        sock.connect((host, port))
+        sock.close()
+        break
+    except:
+        time.sleep(1)
+"
 echo "Banco de dados disponível!"
 
-# Aplica migrações
-python manage.py migrate
+python API_Teste/manage.py makemigrations
 
-# Inicia o servidor (em desenvolvimento) ou gunicorn para produção
-# Para desenvolvimento:
-python manage.py runserver 0.0.0.0:8000
+python API_Teste/manage.py migrate
 
-# Para produção (descomente a linha abaixo e comente a anterior):
-# gunicorn --bind 0.0.0.0:8000 meu_projeto.wsgi:application
+python API_Teste/manage.py runserver 0.0.0.0:8000

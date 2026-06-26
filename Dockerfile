@@ -1,10 +1,11 @@
-# Dockerfile
 FROM python:3.9-slim
 
-# Instala dependências de sistema necessárias para mysqlclient
+# Instala dependências de sistema necessárias para mysqlclient e netcat
 RUN apt-get update && apt-get install -y \
     default-libmysqlclient-dev \
     build-essential \
+    pkg-config \
+    netcat-openbsd \
     && rm -rf /var/lib/apt/lists/*
 
 # Define diretório de trabalho
@@ -12,6 +13,9 @@ WORKDIR /app
 
 # Copia o arquivo de dependências e instala
 COPY requirements.txt .
+
+RUN pip install --upgrade pip
+
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copia o restante do código

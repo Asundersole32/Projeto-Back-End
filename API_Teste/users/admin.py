@@ -1,5 +1,6 @@
 from django.contrib import admin
-from models.user_model import CustomUser
+
+from users.models import CustomUser
 
 
 class CustomUserAdmin(admin.ModelAdmin):

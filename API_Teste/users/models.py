@@ -2,14 +2,14 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser
 from uuid import uuid4
 
-from ..user_manager import CustomUserManager
+from users.user_manager import CustomUserManager
 
 
 class CustomUser(AbstractBaseUser):
     uid = models.UUIDField(default=uuid4, primary_key=True, editable=False, unique=True)
     email=models.EmailField(verbose_name="email", max_length=60, unique=True)
     username=models.CharField(max_length=30, unique=True)
-    data_joined=models.DataTimeField(verbose_name="data joined", auto_now_add=True)
+    data_joined=models.DateTimeField(verbose_name="data joined", auto_now_add=True)
     last_login=models.DateTimeField(verbose_name="last login", auto_now=True)
     is_admin=models.BooleanField(default=False)
     is_active=models.BooleanField(default=True)
