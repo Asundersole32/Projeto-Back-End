@@ -1,6 +1,4 @@
 import django_filters
-from rest_framework.response import Response
-from rest_framework import status
 
 from users.models import CustomUser
 from users.serializers.custom_user_serializer import CustomUserDetailsSerializer
