@@ -10,6 +10,8 @@ services:
       MYSQL_USER: ${DB_USER}
       MYSQL_PASSWORD: ${DB_PASSWORD}
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD_ROOT}
+      CELERY_BROKER: ${CELERY_BROKER}
+      CELERY_RESULT_BACKEND: ${CELERY_RESULT_BACKEND}
     ports:
       - "3306:3306"
     volumes:
@@ -31,5 +33,53 @@ services:
     env_file:
       - .env
 
+  redis:
+    image: redis:7-alpine
+    container_name: redis_django
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  celery_worker:
+    build: .
+    container_name: celery_worker
+    command: celery -A backend worker --loglevel=info
+    volumes:
+      - .:/app
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_PORT=${DB_PORT}
+      - CELERY_BROKER=${CELERY_BROKER}
+      - CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND}
+    depends_on:
+      - redis
+      - db
+    restart: always
+
+  celery_beat:
+    build: .
+    container_name: celery_beat
+    command: celery -A backend beat --loglevel=info
+    volumes:
+      - .:/app
+    environment:
+      - DB_HOST=${DB_HOST}
+      - DB_NAME=${DB_NAME}
+      - DB_USER=${DB_USER}
+      - DB_PASSWORD=${DB_PASSWORD}
+      - DB_PORT=${DB_PORT}
+      - CELERY_BROKER=${CELERY_BROKER}
+      - CELERY_RESULT_BACKEND=${CELERY_RESULT_BACKEND}
+    depends_on:
+      - redis
+      - db
+    restart: always
+
 volumes:
   mysql_data:
+  redis_data:
