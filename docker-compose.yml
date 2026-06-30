@@ -80,6 +80,20 @@ services:
       - db
     restart: always
 
+  flower:
+    image: mher/flower:latest
+    container_name: flower
+    restart: always
+    ports:
+      - "5555:5555"
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+      - FLOWER_PORT=5555
+    depends_on:
+      - redis
+      - celery_worker
+
 volumes:
   mysql_data:
   redis_data:

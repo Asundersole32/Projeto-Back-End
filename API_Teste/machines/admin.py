@@ -12,7 +12,7 @@ class LineAdmin(admin.ModelAdmin):
 admin.site.register(Line, LineAdmin)
 
 class MachineAdmin(admin.ModelAdmin):
-    list_display = ['id', 'machine_name', 'machine_type', 'company', 'line', 'status', 'is_active', 'created_at', 'updated_at']
+    list_display = ['id', 'machine_name', 'machine_type', 'company', 'line', 'is_active', 'created_at', 'updated_at']
     list_display_links = ['id', 'machine_name', 'machine_type']
     search_fields = ['id', 'machine_name', 'machine_type']
 

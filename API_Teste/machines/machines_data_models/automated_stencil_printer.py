@@ -1,8 +1,13 @@
+import random
+
+
 class AutomatedStencilPrinter():
-    def __init__(self):
+    def __init__(self, machine_id):
+        self.machine_id = machine_id
         self.cycle_time = None
         self.paste_remaining = None
-        self.cleaning_interval = None
+        self.cleaning_interval = 5 #pego como referencia do painel já existente
+        self.status = 'Printing'
         self.data_dict = {}
 
     def set_cycle_time(self, cycle_time):
@@ -31,11 +36,24 @@ class AutomatedStencilPrinter():
     
     def mount_dict(self):
         self.data_dict = {
+            'machine_id': self.machine_id,
             'cycle_time': self.cycle_time,
             'paste_remaining': self.paste_remaining,
-            'cleaning_interval': self.cleaning_interval
+            'cleaning_interval': self.cleaning_interval,
+            'status': self.status,
         }
-        return self.data_dict
+        return self
     
     def generate_data(self):
-        pass
+        min_cycle_time = 1.0
+        max_cycle_time = 100.0
+
+        random_cycle_time = random.uniform(min_cycle_time, max_cycle_time)
+        random_paste_remaining = random.uniform(0.0, 100.0)
+
+        self.cycle_time = random_cycle_time
+        self.paste_remaining = random_paste_remaining
+
+        seeded_data = self.mount_dict()
+        return seeded_data.data_dict
+    

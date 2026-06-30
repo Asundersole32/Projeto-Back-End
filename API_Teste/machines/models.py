@@ -12,18 +12,10 @@ class Line(models.Model):
 
 
 class Machine(models.Model):
-    STATUS = (('printing', 'Printing'),
-        ('inspecting', 'Inspecting'),
-        ('running', 'Running'),
-        ('heating', 'Heating'),
-        ('paused', 'Paused'),
-        ('active', 'Active'),)
-
     machine_name=models.CharField(max_length=100)
     machine_type=models.CharField(max_length=100)
     company=models.CharField(max_length=100)
     line=models.ForeignKey(Line, on_delete=models.CASCADE)
-    status=models.CharField(max_length=50, choices=STATUS)
     is_active=models.BooleanField(default=False)
     created_at=models.DateTimeField(auto_now_add=True)
     updated_at=models.DateTimeField(auto_now=True)
