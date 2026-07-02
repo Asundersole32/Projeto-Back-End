@@ -54,7 +54,7 @@ class SolderPasteInspection():
         max_defect_count = 100
 
         random_result = random.randint(0, 1)
-        random_inspection_speed = random.randint(min_inspection_speed, max_inspection_speed)
+        random_inspection_speed = random.uniform(min_inspection_speed, max_inspection_speed)
         random_defect_count = random.randint(min_defect_count, max_defect_count)
 
         self.inspection_result = inspect_result_list[random_result]

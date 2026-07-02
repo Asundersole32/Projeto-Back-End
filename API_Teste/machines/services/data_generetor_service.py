@@ -4,7 +4,7 @@ from machines.machines_data_models.pick_and_place import PickAndPlace
 from machines.machines_data_models.reflow_oven import ReflowOven
 from machines.machines_data_models.solder_paste_inspection import SolderPasteInspection
 
-from machines.models import MachineData
+from machines.models import MachineData, Machine
 
 
 class SeededDataGenerator():
@@ -22,28 +22,34 @@ class SeededDataGenerator():
         reflow_oven_data = self.reflow_oven.generate_data()
         spi_data = self.spi.generate_data()
 
+        aoi = Machine.objects.get(pk=self.aoi.machine_id)
+        automated_stencil_printer = Machine.objects.get(pk=self.automated_stencil_printer.machine_id)
+        pick_and_place = Machine.objects.get(pk=self.pick_and_place.machine_id)
+        reflow_oven = Machine.objects.get(pk=self.reflow_oven.machine_id)
+        spi = Machine.objects.get(pk=self.spi.machine_id)
+
         MachineData.objects.create(
-            machine = self.aoi.machine_id,
+            machine = aoi,
             data = aoi_data
         )
 
         MachineData.objects.create(
-            machine = self.automated_stencil_printer.machine_id,
+            machine = automated_stencil_printer,
             data = automated_stencil_printer_data
         )
 
         MachineData.objects.create(
-            machine = self.pick_and_place.machine_id,
+            machine = pick_and_place,
             data = pick_and_place_data
         )
 
         MachineData.objects.create(
-            machine = self.reflow_oven.machine_id,
+            machine = reflow_oven,
             data = reflow_oven_data
         )
 
         MachineData.objects.create(
-            machine = self.spi.machine_id,
+            machine = spi,
             data = spi_data
         )
 

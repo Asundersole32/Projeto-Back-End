@@ -20,6 +20,8 @@ services:
 
   web:
     build: .
+    entrypoint: /entrypoint.sh
+    command: runserver 
     container_name: django_api
     restart: always
     ports:
@@ -45,6 +47,7 @@ services:
   celery_worker:
     build: .
     container_name: celery_worker
+    entrypoint: /entrypoint.sh
     command: celery -A backend worker --loglevel=info
     volumes:
       - .:/app
@@ -64,6 +67,7 @@ services:
   celery_beat:
     build: .
     container_name: celery_beat
+    entrypoint: /entrypoint.sh
     command: celery -A backend beat --loglevel=info
     volumes:
       - .:/app
