@@ -23,4 +23,6 @@ urlpatterns = [
     path('api/v1/', include('users.urls.user_urls')),
     path('api/v1/', include('users.urls.system_urls')),
     path('api/v1/', include('machines.urls.seeded_data_urls')),
+    path('api/v1/', include('machines.urls.machine_urls')),
+    path('api/v1/', include('machines.urls.line_urls')),
 ]

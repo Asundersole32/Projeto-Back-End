@@ -30,7 +30,7 @@ def seeded_data_generator_task(self, aoi_id, automated_stencil_printer_id, pick_
     # Reagenda para 60 segundos depois (sem task_id fixo)
     seeded_data_generator_task.apply_async(
         args=(aoi_id, automated_stencil_printer_id, pick_and_place_id, reflow_oven_id, spi_id, token),
-        eta=datetime.now() + timedelta(seconds=60)
+        eta=datetime.now() + timedelta(seconds=20)
     )
 
 def generator_starter(aoi_id, automated_stencil_printer_id, pick_and_place_id, reflow_oven_id, spi_id):

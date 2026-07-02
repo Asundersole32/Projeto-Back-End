@@ -3,16 +3,16 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 
-from machines.serializers.machine_serializer import MachineSerializer
+from machines.serializers.line_serializer import LineSerializer
 
 
-class CreateMachineView(generics.CreateAPIView):
+class CreateLineView(generics.CreateAPIView):
     permission_classes = [AllowAny]
-    serializer_class = MachineSerializer
+    serializer_class = LineSerializer
 
     def post(self, request):
         try:
-            serializer = MachineSerializer(data=request.data)
+            serializer = LineSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)

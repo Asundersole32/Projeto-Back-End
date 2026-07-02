@@ -1,6 +1,5 @@
 #!/bin/bash
 set -e
-
 echo "Aguardando banco de dados..."
 python -c "
 import socket, time, os
@@ -16,9 +15,6 @@ while True:
         time.sleep(1)
 "
 echo "Banco de dados disponível!"
-
-# Se o primeiro argumento for "runserver" ou não houver argumento,
-# aplica migrações e inicia o servidor Django
 if [ "$1" = "runserver" ] || [ -z "$1" ]; then
     echo "Procurando migrações..."
     python manage.py makemigrations
@@ -26,6 +22,5 @@ if [ "$1" = "runserver" ] || [ -z "$1" ]; then
     python manage.py migrate
     exec python manage.py runserver 0.0.0.0:8000
 else
-    # Caso contrário, executa o comando passado (ex: celery worker)
     exec "$@"
 fi

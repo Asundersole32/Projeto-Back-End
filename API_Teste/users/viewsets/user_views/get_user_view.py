@@ -7,7 +7,7 @@ from users.serializers.custom_user_serializer import CustomUserDetailsSerializer
 from users.models import CustomUser
 
 
-class GetUserView(generics.ListAPIView):
+class GetUserView(generics.RetrieveAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = CustomUserDetailsSerializer
 
