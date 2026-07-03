@@ -1,6 +1,6 @@
 from rest_framework.response import Response
 from rest_framework import generics
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 
 from machines.models import Line
@@ -8,7 +8,7 @@ from machines.serializers.line_serializer import LineSerializer
 
 
 class UpdateLineView(generics.UpdateAPIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     serializer_class = LineSerializer
 
     def put(self, request, line_id=None):

@@ -1,6 +1,6 @@
 from rest_framework import generics, status
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from machines.models import Machine
@@ -26,7 +26,7 @@ class MachineFilter(django_filters.FilterSet):
 
 
 class MachineListView(generics.ListAPIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticatedss]
     serializer_class = MachineSerializer
     queryset = Machine.objects.all()
     filter_backends = [DjangoFilterBackend]

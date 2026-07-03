@@ -1,5 +1,5 @@
 from rest_framework import generics, status
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from machines.models import MachineData, Machine
@@ -7,7 +7,7 @@ from machines.serializers.machine_data_serializer import MachineDataSerializer
 
 
 class GetSeededMachineDataView(generics.RetrieveAPIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     serializer_class = MachineDataSerializer
 
     def get(self, request, machine_id=None):

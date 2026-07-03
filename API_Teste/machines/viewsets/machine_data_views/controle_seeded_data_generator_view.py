@@ -1,7 +1,7 @@
 from django.core.cache import cache
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 from celery import current_app
 
@@ -11,7 +11,7 @@ import uuid
 
 
 class SeededDataGeneratorControllerView(APIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
 
     def post(self, request, aoi_id, automated_stencil_printer_id, pick_and_place_id, reflow_oven_id, spi_id):
         try:
