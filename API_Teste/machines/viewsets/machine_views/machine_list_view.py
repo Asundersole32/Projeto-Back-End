@@ -26,7 +26,7 @@ class MachineFilter(django_filters.FilterSet):
 
 
 class MachineListView(generics.ListAPIView):
-    permission_classes = [IsAuthenticatedss]
+    permission_classes = [IsAuthenticated]
     serializer_class = MachineSerializer
     queryset = Machine.objects.all()
     filter_backends = [DjangoFilterBackend]
