@@ -25,4 +25,12 @@ urlpatterns = [
     path('api/v1/', include('machines.urls.seeded_data_urls')),
     path('api/v1/', include('machines.urls.machine_urls')),
     path('api/v1/', include('machines.urls.line_urls')),
+    path('api/v1/', include('unity.urls.game_object_position_urls')),
+    path('api/v1/', include('unity.urls.game_object_rotation_urls')),
+    path('api/v1/', include('unity.urls.game_object_scale_urls')),
+    path('api/v1/', include('unity.urls.game_object_transform_urls')),
+    path('api/v1/', include('unity.urls.game_object_urls')),
+    path('api/v1/', include('unity.urls.layer_urls')),
+    path('api/v1/', include('unity.urls.metadata_urls')),
+    path('api/v1/', include('unity.urls.tag_urls')),
 ]
