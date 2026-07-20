@@ -9,6 +9,7 @@ from unity.models import (Tag,
                     GameObjectRotation,
                     GameObjectScale,
                     Metadata,
+                    MachineGameObject
                     )
 
 
@@ -31,7 +32,7 @@ admin.site.register(Layer, LayerAdmin)
 
 
 class GameObjectAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'tag', 'prefab_name', 'pre_existing_parent', 'line_position', 'parent']
+    list_display = ['id', 'name', 'tag', 'prefab', 'pre_existing_parent', 'line_position', 'parent']
     list_display_links = ['id', 'name']
     search_fields = ['id', 'name']
 
@@ -91,3 +92,12 @@ class PrefabAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Prefab, PrefabAdmin)
+
+
+class MachineGameObjectAdmin(admin.ModelAdmin):
+    list_display = ['id', 'game_object', 'machine']
+    list_display_links = ['id', 'game_object', 'machine']
+    search_fields = ['id', 'game_object', 'machine']
+
+
+admin.site.register(MachineGameObject, MachineGameObjectAdmin)

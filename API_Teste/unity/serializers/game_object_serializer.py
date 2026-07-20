@@ -4,6 +4,8 @@ from unity.models import GameObject
 
 
 class GameObjectSerializer(serializers.ModelSerializer):
+    prefab = serializers.StringRelatedField()
+
     class Meta:
         model=GameObject
-        fields=['id', 'name', 'tag', 'layer', 'prefab_name', 'pre_existing_parent', 'line_position', 'parent']
+        fields=['id', 'name', 'tag', 'layer', 'prefab', 'pre_existing_parent', 'line_position', 'parent']

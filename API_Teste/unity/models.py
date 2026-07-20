@@ -27,7 +27,7 @@ class GameObject(models.Model):
     name=models.CharField(max_length=100)
     tag=models.ForeignKey(Tag, on_delete=models.SET_NULL, null=True, blank=True, default=None)
     layer=models.ForeignKey(Layer, on_delete=models.SET_NULL, null=True, blank=True, default=None)
-    prefab_name=models.CharField(max_length=100)
+    prefab=models.ForeignKey(Prefab, on_delete=models.CASCADE, null=True, blank=True, default=None)
     pre_existing_parent = models.CharField(max_length=100, null=True, blank=True, default=None)
     line_position = models.IntegerField(default=0)
     parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='children', default=None)
@@ -41,7 +41,7 @@ class GameObjectTransform(models.Model):
     prefab = models.ForeignKey(Prefab, on_delete=models.CASCADE, null=True, blank=True, default=None)
 
     def __str__(self):
-        return str(self.game_object)
+        return str(self.game_object) + ' - ' + str(self.prefab)
 
 
 class GameObjectPosition(models.Model):
@@ -81,3 +81,11 @@ class Metadata(models.Model):
 
     def __str__(self):
         return self.scene + ' + ' + str(self.gameobject)
+    
+
+class MachineGameObject(models.Model):
+    game_object = models.ForeignKey(GameObject, on_delete=models.CASCADE)
+    machine = models.ForeignKey('machines.Machine', on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.game_object) + ' - ' + str(self.machine)

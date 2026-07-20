@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from unity.models import GameObject, Metadata, GameObjectTransform, GameObjectScale, GameObjectPosition, GameObjectRotation
+from unity.models import GameObject, Metadata, GameObjectTransform, GameObjectScale, GameObjectPosition, GameObjectRotation, Prefab
 
 from unity.serializers.game_object_position_serializer import GameObjectPositionSerializer
 from unity.serializers.game_object_rotation_serializer import GameObjectRotationSerializer
@@ -11,6 +11,7 @@ from unity.serializers.game_object_scale_serializer import GameObjectScaleSerial
 from unity.serializers.game_object_serializer import GameObjectSerializer
 from unity.serializers.game_object_transform_serializer import GameObjectTransformSerializer
 from unity.serializers.metadata_serializer import MetadataSerializer
+from unity.serializers.prefab_serializer import PrefabSerializer
 
 
 class ListCompleteGameObjectsView(APIView):
@@ -24,9 +25,17 @@ class ListCompleteGameObjectsView(APIView):
 
             for game_object in game_objects:
                 return_info = {}
-
+                
                 metadata = Metadata.objects.filter(gameobject=game_object).last()
-                game_object_transform = GameObjectTransform.objects.filter(game_object=game_object).last()
+
+                if game_object.prefab != None:
+                    if game_object.prefab.prefab_name != "Vazio":
+                        game_object_transform = GameObjectTransform.objects.filter(prefab=game_object.prefab).last()
+                    else:
+                        game_object_transform = GameObjectTransform.objects.filter(game_object=game_object).last()
+                else:
+                    game_object_transform = GameObjectTransform.objects.filter(game_object=game_object).last()
+
                 game_object_position = GameObjectPosition.objects.filter(game_object_transform=game_object_transform).last()
                 game_object_rotation = GameObjectRotation.objects.filter(game_object_transform=game_object_transform).last()
                 game_object_scale = GameObjectScale.objects.filter(game_object_transform=game_object_transform).last()
