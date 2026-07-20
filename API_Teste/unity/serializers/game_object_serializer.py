@@ -6,4 +6,4 @@ from unity.models import GameObject
 class GameObjectSerializer(serializers.ModelSerializer):
     class Meta:
         model=GameObject
-        fields=['id', 'name', 'tag', 'layer', 'prefab_name', 'parent']
+        fields=['id', 'name', 'tag', 'layer', 'prefab_name', 'pre_existing_parent', 'line_position', 'parent']

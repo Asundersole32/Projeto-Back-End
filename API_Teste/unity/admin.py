@@ -1,6 +1,7 @@
 from django.contrib import admin
 
 from unity.models import (Tag, 
+                    Prefab,
                     Layer, 
                     GameObject, 
                     GameObjectTransform, 
@@ -30,7 +31,7 @@ admin.site.register(Layer, LayerAdmin)
 
 
 class GameObjectAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'tag', 'prefab_name', 'parent_id']
+    list_display = ['id', 'name', 'tag', 'prefab_name', 'pre_existing_parent', 'line_position', 'parent']
     list_display_links = ['id', 'name']
     search_fields = ['id', 'name']
 
@@ -39,9 +40,9 @@ admin.site.register(GameObject, GameObjectAdmin)
 
 
 class GameObjectTransformAdmin(admin.ModelAdmin):
-    list_display = ['id', 'game_object']
-    list_display_links = ['id', 'game_object']
-    search_fields = ['id', 'game_object']
+    list_display = ['id', 'game_object', 'prefab']
+    list_display_links = ['id', 'game_object', 'prefab']
+    search_fields = ['id', 'game_object', 'prefab']
 
 
 admin.site.register(GameObjectTransform, GameObjectTransformAdmin)
@@ -81,3 +82,12 @@ class MetadataAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Metadata, MetadataAdmin)
+
+
+class PrefabAdmin(admin.ModelAdmin):
+    list_display = ['id', 'prefab_name']
+    list_display_links = ['id', 'prefab_name']
+    search_fields = ['id', 'prefab_name']
+
+
+admin.site.register(Prefab, PrefabAdmin)

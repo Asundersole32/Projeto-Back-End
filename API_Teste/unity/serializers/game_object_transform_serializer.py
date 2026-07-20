@@ -6,4 +6,4 @@ from unity.models import GameObjectTransform
 class GameObjectTransformSerializer(serializers.ModelSerializer):
     class Meta:
         model=GameObjectTransform
-        fields=['id', 'game_object']
+        fields=['id', 'game_object', 'prefab']

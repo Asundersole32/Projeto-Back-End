@@ -1,5 +1,5 @@
 from rest_framework import generics, status
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 
 from unity.models import GameObject
@@ -7,7 +7,7 @@ from unity.serializers.game_object_serializer import GameObjectSerializer
 
 
 class ListGameObjectView(generics.ListAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     serializer_class = GameObjectSerializer
 
     def get(self, request):

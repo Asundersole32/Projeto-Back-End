@@ -33,4 +33,5 @@ urlpatterns = [
     path('api/v1/', include('unity.urls.layer_urls')),
     path('api/v1/', include('unity.urls.metadata_urls')),
     path('api/v1/', include('unity.urls.tag_urls')),
+    path('api/v1/', include('unity.urls.prefab_urls')),
 ]

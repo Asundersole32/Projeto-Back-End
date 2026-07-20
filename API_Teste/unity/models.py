@@ -1,6 +1,13 @@
 from django.db import models
 
 
+class Prefab(models.Model):
+    prefab_name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.prefab_name
+
+
 class Tag(models.Model):
     tag_name=models.CharField(max_length=100)
 
@@ -21,6 +28,8 @@ class GameObject(models.Model):
     tag=models.ForeignKey(Tag, on_delete=models.SET_NULL, null=True, blank=True, default=None)
     layer=models.ForeignKey(Layer, on_delete=models.SET_NULL, null=True, blank=True, default=None)
     prefab_name=models.CharField(max_length=100)
+    pre_existing_parent = models.CharField(max_length=100, null=True, blank=True, default=None)
+    line_position = models.IntegerField(default=0)
     parent = models.ForeignKey('self', on_delete=models.SET_NULL, null=True, blank=True, related_name='children', default=None)
 
     def __str__(self):
@@ -28,7 +37,8 @@ class GameObject(models.Model):
 
 
 class GameObjectTransform(models.Model):
-    game_object=models.ForeignKey(GameObject, on_delete=models.CASCADE)
+    game_object=models.ForeignKey(GameObject, on_delete=models.CASCADE, null=True, blank=True, default=None)
+    prefab = models.ForeignKey(Prefab, on_delete=models.CASCADE, null=True, blank=True, default=None)
 
     def __str__(self):
         return str(self.game_object)
