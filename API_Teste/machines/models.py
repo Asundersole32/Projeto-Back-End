@@ -12,6 +12,7 @@ class Line(models.Model):
 
 
 class Machine(models.Model):
+    machine_id = models.CharField(max_length=100, null=True, blank=True, default=None)
     machine_name=models.CharField(max_length=100)
     machine_type=models.CharField(max_length=100)
     company=models.CharField(max_length=100)

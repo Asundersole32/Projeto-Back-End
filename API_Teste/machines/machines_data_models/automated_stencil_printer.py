@@ -6,7 +6,7 @@ class AutomatedStencilPrinter():
         self.machine_id = machine_id
         self.cycle_time = None
         self.paste_remaining = None
-        self.cleaning_interval = 5 #pego como referencia do painel já existente
+        self.cleaning_interval = 5 
         self.status = 'Printing'
         self.data_dict = {}
 

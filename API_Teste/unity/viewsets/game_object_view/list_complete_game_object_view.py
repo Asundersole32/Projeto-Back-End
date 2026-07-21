@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from unity.models import GameObject, Metadata, GameObjectTransform, GameObjectScale, GameObjectPosition, GameObjectRotation, Prefab
+from unity.models import GameObject, Metadata, GameObjectTransform, GameObjectScale, GameObjectPosition, GameObjectRotation, MachineGameObject
 
 from unity.serializers.game_object_position_serializer import GameObjectPositionSerializer
 from unity.serializers.game_object_rotation_serializer import GameObjectRotationSerializer
@@ -11,7 +11,7 @@ from unity.serializers.game_object_scale_serializer import GameObjectScaleSerial
 from unity.serializers.game_object_serializer import GameObjectSerializer
 from unity.serializers.game_object_transform_serializer import GameObjectTransformSerializer
 from unity.serializers.metadata_serializer import MetadataSerializer
-from unity.serializers.prefab_serializer import PrefabSerializer
+from unity.serializers.machine_game_object_serializer import MachineGameObjectSerializer
 
 
 class ListCompleteGameObjectsView(APIView):
@@ -27,6 +27,10 @@ class ListCompleteGameObjectsView(APIView):
                 return_info = {}
                 
                 metadata = Metadata.objects.filter(gameobject=game_object).last()
+                try:
+                    machine_game_object = MachineGameObject.objects.get(game_object=game_object)
+                except:
+                    machine_game_object = None
 
                 if game_object.prefab != None:
                     if game_object.prefab.prefab_name != "Vazio":
@@ -48,6 +52,7 @@ class ListCompleteGameObjectsView(APIView):
                 game_object_rotation_serializer = GameObjectRotationSerializer(game_object_rotation)
 
                 return_info['metadata'] = metadata_serializer.data
+                return_info['machine'] = machine_game_object.machine.machine_id if machine_game_object != None else None
                 return_info['game_object'] = game_object_serializer.data
                 return_info['game_object']['transform'] = game_object_transform_serializer.data
                 return_info['game_object']['transform']['position'] = game_object_position_serializer.data
