@@ -35,4 +35,5 @@ urlpatterns = [
     path('api/v1/', include('unity.urls.tag_urls')),
     path('api/v1/', include('unity.urls.prefab_urls')),
     path('api/v1/', include('unity.urls.machine_game_object_urls')),
+    path('api/v1/', include('db_connector.urls'))
 ]

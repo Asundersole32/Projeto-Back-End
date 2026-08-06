@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'users',
     'machines',
     'unity',
+    'db_connector',
 ]
 
 MIDDLEWARE = [
